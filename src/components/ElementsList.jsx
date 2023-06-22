@@ -17,7 +17,7 @@ function groupBy(items, key) {
   return map
 }
 
-const ElementsList = ({ user, className }) => {
+const ElementsList = ({ userId, className }) => {
   const navigate = useNavigate()
   const tabs = ["Day", "Week", "Month", "3-Months", "Year", "All"]
   const [elements, setElements] = useState([])
@@ -26,7 +26,7 @@ const ElementsList = ({ user, className }) => {
   const [dates, setDates] = useState([])
   
   useEffect(() => {
-    fetchElementsBy(user._id, selectedTab.toLowerCase()).then(elements => setElements(elements))
+    fetchElementsBy(userId, selectedTab.toLowerCase()).then(elements => setElements(elements))
   }, [selectedTab])
 
   useEffect(() => {

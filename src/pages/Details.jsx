@@ -36,7 +36,7 @@ function deleteElementOrError(element, navigate) {
   })
 }
 
-const Details = ({ user }) => {
+const Details = ({ userId }) => {
   const params = useParams()
   const navigate = useNavigate()
   const today = new Date()
@@ -47,7 +47,7 @@ const Details = ({ user }) => {
     amount: 0.00,
     isExpense: true,
     date: today,
-    userId: user._id
+    userId: userId
   })
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -63,7 +63,7 @@ const Details = ({ user }) => {
 
   useEffect(() => {
     if (params["id"] !== undefined) {
-      fetchElement(user._id, params["id"])
+      fetchElement(params["id"])
         .then(element => setElement({
           ...element,
           "date": new Date(element["date"])

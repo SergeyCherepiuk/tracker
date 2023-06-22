@@ -3,6 +3,7 @@ import Panel from './Panel'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
 import { fetchElementsBy, fetchElementsFromPreviousMonth } from "../hooks/fetchElement"
+import { fetchUserById } from '../hooks/fetchUser'
 
 function sum(array) {
   return array.reduce((acc, x) => acc + x, 0);
@@ -35,7 +36,7 @@ function getPercent(totalOfElementsThisMonth, totalOfElementsMonthAgo) {
   return ((totalOfElementsThisMonth - totalOfElementsMonthAgo) / totalOfElementsMonthAgo * 100).toFixed(2)
 }
 
-const SideBar = ({ user, className }) => {
+const SideBar = ({ userId, className }) => {
   const navigate = useNavigate()
   const [panelsData, setPanelsData] = useState({
     totalExpensesThisMonth: 0.0,
@@ -45,14 +46,20 @@ const SideBar = ({ user, className }) => {
     expensesPercent: 0.0,
     incomesPercent: 0.0
   })
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     Promise.all([
-      fetchElementsBy(user._id, "month"),
-      fetchElementsFromPreviousMonth(user._id)
+      fetchElementsBy(userId, "month"),
+      fetchElementsFromPreviousMonth(userId)
     ]).then(elements => {
       const data = transformElements(elements[0], elements[1])
       setPanelsData(data)
+    })
+    fetchUserById(userId).then(response => {
+      if (response.isOk) {
+        setUser(response.data)
+      }
     })
   }, [])
 
@@ -67,8 +74,8 @@ const SideBar = ({ user, className }) => {
         amount={panelsData.totalIncomesThisMonth}
         percent={panelsData.incomesPercent} />
       <div className='flex flex-col gap-2 row-span-2'>
-        <p className='text-xl'>Logged in as {user.firstName}</p>
-        <p className='text-lg'>{user.email}</p>
+        <p className='text-xl'>Logged in as {user ? user.firstName : "*User's first name*"}</p>
+        <p className='text-lg'>{user ? user.email : "*User's email*"}</p>
         <Button
           label="Add"
           action={() => navigate("/details")}

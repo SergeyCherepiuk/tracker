@@ -59,14 +59,14 @@ function transformElements(elements) {
   } 
 }
 
-const ElementsChart = ({ user, className }) => {
+const ElementsChart = ({ userId, className }) => {
   const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const [elements, setElements] = useState([])
   const [chartData, setChartData] = useState({ expenses: new Map(), incomes: new Map() })
   const [labelsState, setLabelsState] = useState(false)
 
   useEffect(() => {
-    fetchElementsBy(user._id, "year").then(elements => setElements(elements))
+    fetchElementsBy(userId, "year").then(elements => setElements(elements))
   }, [])
 
   useEffect(() => {

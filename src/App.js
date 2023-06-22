@@ -10,30 +10,15 @@ import { fetchUserById } from './hooks/fetchUser';
 
 function App() {
   const token = localStorage.getItem("token")
-  const [user, setUser] = useState({})
-
-  useEffect(() => {
-    if (token) {
-      const id = jwtDecode(token)._id
-      fetchUserById(id).then(response => {
-        if (response.isOk) {
-          setUser(response.data)
-        } else {
-          setUser(null)
-        }
-      })
-    } else {
-      setUser(null)
-    }
-  }, [])
+  const userId = token ? jwtDecode(token)._id : null
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/signup" element={ token ? <Navigate to="/" replace /> : <SignUp/> }/>
-        <Route path="/login" element={ token ? <Navigate to="/" replace /> : <LogIn/> }/>
-        <Route path='/' element={ token ? <Home user={user}/> : <Navigate to="/login" replace /> }/>
-        <Route path='/details/:id?' element={ token ? <Details user={user} /> : <Navigate to="/login" replace /> }/>
+        <Route path="/signup" element={ userId ? <Navigate to="/" replace /> : <SignUp/> }/>
+        <Route path="/login" element={ userId ? <Navigate to="/" replace /> : <LogIn/> }/>
+        <Route path='/' element={ userId ? <Home userId={userId}/> : <Navigate to="/login" replace /> }/>
+        <Route path='/details/:id?' element={ userId ? <Details userId={userId} /> : <Navigate to="/login" replace /> }/>
       </Routes>
     </div>
   );

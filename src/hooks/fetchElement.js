@@ -1,5 +1,5 @@
-export async function fetchElement(userId, id) {
-    const response = await fetch(`http://localhost:4321/api/${userId}/element/${id}`)
+export async function fetchElement(id) {
+    const response = await fetch(`http://localhost:4321/api/element/${id}`)
     return await response.json()
 }
 
