@@ -33,6 +33,9 @@ function transformElements(elementsThisMonth, elementsMonthAgo) {
 }
 
 function getPercent(totalOfElementsThisMonth, totalOfElementsMonthAgo) {
+  if (totalOfElementsMonthAgo == 0) {
+    return 0
+  }
   return ((totalOfElementsThisMonth - totalOfElementsMonthAgo) / totalOfElementsMonthAgo * 100).toFixed(2)
 }
 

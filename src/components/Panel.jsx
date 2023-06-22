@@ -2,8 +2,6 @@ import React from 'react'
 import { HiTrendingUp } from '@react-icons/all-files/hi/HiTrendingUp';
 import { HiTrendingDown } from '@react-icons/all-files/hi/HiTrendingDown';
 
-// TODO: Fix panels "infinity" and "NaN"
-
 const Panel = ({ isExpense, amount, percent, className }) => {
   const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const label = isExpense ? "Monthly expenses" : "Monthly incomes"
