@@ -1,5 +1,8 @@
+
+
 .App {
   text-align: center;
+  background-color: theme("colors.lightgray-white");
 }
 
 .App-logo {
@@ -35,4 +38,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.datepicker-cell.selected {
+  background-color: theme("colors.green[500]");
 }
