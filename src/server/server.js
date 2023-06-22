@@ -12,6 +12,9 @@ app.use(cors())
 
 const api = require("./routes/api")
 app.use("/api", api)
+const auth = require("./routes/auth")
+app.use("/auth", auth)
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}!`)

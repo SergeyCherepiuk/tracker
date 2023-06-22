@@ -14,13 +14,13 @@ const Panel = ({ isExpense, amount, percent, className }) => {
   const icon = (percent > 0.0) ? <HiTrendingUp className={color}/> : <HiTrendingDown className={color}/>
 
   return (
-    <div className={`${className} flex flex-col items-start bg-white rounded-2xl shadow-sm p-4 gap-2`}>
+    <div className={`${className} flex flex-col items-start bg-white rounded-2xl shadow-sm p-4 gap-2 w-64`}>
       <span className='text-lg'>{label}</span>
       <span className='text-3xl font-semibold'>{currencyFormatter.format(amount)}</span>
       <div className='flex flex-row items-center'>
         {icon}
         <span className={`${color} text-lg`}>{((percent > 0.0) ? "+" : "-") + Math.abs(percent)}%</span>
-        <span className='text-lg '>&nbsp;vs last 30 days</span>
+        <span className='text-lg'>&nbsp;vs last 30 days</span>
       </div>
     </div>
   )

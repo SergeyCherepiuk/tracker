@@ -66,10 +66,19 @@ const SideBar = ({ className }) => {
         isExpense={false}
         amount={panelsData.totalIncomesThisMonth}
         percent={panelsData.incomesPercent} />
-      <Button
-        label="Add"
-        action={() => navigate("/details")}
-        color="bg-green-500" />
+      <div className='flex flex-col gap-2'>
+        <Button
+          label="Add"
+          action={() => navigate("/details")}
+          color="bg-green-500" />
+        <Button
+          label="Log out"
+          action={() => {
+            localStorage.removeItem("token")
+            window.location.reload()
+          }}
+          color="bg-gray-500" />
+      </div>
     </div>
   )
 }
