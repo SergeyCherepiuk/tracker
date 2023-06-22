@@ -125,7 +125,6 @@ router.get("/:userId/elements/year", (req, res) => {
 
 router.get("/:userId/elements/all", (req, res) => {
     const userId = req.params.userId
-    console.log(userId)
     Element
         .find({ userId: userId })
         .sort({ date: -1 })

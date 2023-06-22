@@ -18,7 +18,6 @@ function App() {
       fetchUserById(id).then(response => {
         if (response.isOk) {
           setUser(response.data)
-          console.log(response)
         } else {
           setUser(null)
         }

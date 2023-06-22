@@ -5,7 +5,6 @@ class ElementController {
 	constructor() {  }
 
     async insert(req, res) {
-        console.log(req.body)
         const { error } = validate(req.body)
         if (error) {
             return res

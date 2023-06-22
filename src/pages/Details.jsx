@@ -9,7 +9,6 @@ import Switch from "../components/Switch";
 import Error from '../components/Error';
 
 function addElementOrError(element, setErrorMessage, navigate) {
-  console.log(element)
   addElement(element).then(response => {
     if (response.isOk) {
       navigate("/")
