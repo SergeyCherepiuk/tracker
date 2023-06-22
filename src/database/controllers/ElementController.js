@@ -1,10 +1,17 @@
-const Element = require("../models/Element")
+const { Element, validate } = require("../models/Element")
+
 
 class ElementController {
 	constructor() {  }
 
     async insert(req, res) {
-        console.log(req.body)
+        const { error } = validate(req.body)
+        if (error) {
+            return res
+                .status(400) // Bad request
+                .send({ message: error.details[0].message })
+        }
+
         let element = new Element()
         element.title = req.body.title
         element.category = req.body.category
@@ -12,31 +19,29 @@ class ElementController {
         element.amount = req.body.amount
         element.date = req.body.date
         await element.save()
-            .then(() => res.sendStatus(200))
-            .catch((err) => {
-                console.log("Data insert error: " + err)
-                res.sendStatus(500)
-            })
+            .then(() => res.status(200).send({ message: "Element add successfully" }))
+            .catch(() => res.status(500).send({ message: "Internal server error!" }))
     }
 
     async update(req, res) {
+        const { error } = validate(req.body)
+        if (error) {
+            return res
+                .status(400) // Bad request
+                .send({ message: error.details[0].message })
+        }
+
         Element
             .findByIdAndUpdate(req.body._id, req.body)
-            .then(() => res.sendStatus(200))
-            .catch((err) => {
-                console.log("Data update error: " + err)
-                res.sendStatus(500)
-            })
+            .then(() => res.status(200).send({ message: "Element updated successfully" }))
+            .catch(() => res.status(500).send({ message: "Internal server error!" }))
     }
 
     async delete(req, res) {
         await Element
             .findByIdAndRemove(req.body._id)
-            .then(() => res.sendStatus(200))
-            .catch((err) => {
-                console.log("Data delete error: " + err)
-                res.sendStatus(500)
-            })
+            .then(() => res.status(200).send({ message: "Element deleted successfully" }))
+            .catch(() => res.status(500).send({ message: "Internal server error!" }))
     }
 }
 

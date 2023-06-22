@@ -1,4 +1,4 @@
-const Element = require("../../database/models/Element")
+const { Element } = require("../../database/models/Element")
 const ElementController = require("../../database/controllers/ElementController")
 const express = require("express")
 

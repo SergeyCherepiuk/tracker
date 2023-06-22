@@ -14,31 +14,34 @@ export async function fetchElementsFromPreviousMonth() {
 }
 
 export async function updateElement(elementToUpdate) {
-    await fetch("http://localhost:4321/api/element", {
+    const response = await fetch("http://localhost:4321/api/element", {
         method: "PUT",
         headers: {
             'Content-type': 'application/json'
         },
         body: JSON.stringify(elementToUpdate)
     })
+    return { data: await response.json(), isOk: response.ok }
 }
   
 export async function addElement(elementToAdd) {
-    await fetch("http://localhost:4321/api/element", {
+    const response = await fetch("http://localhost:4321/api/element", {
         method: "POST",
         headers: {
             'Content-type': 'application/json',
         },
         body: JSON.stringify(elementToAdd)
     })
+    return { data: await response.json(), isOk: response.ok }
 }
   
 export async function deleteElement(elementToDelete) {
-    await fetch("http://localhost:4321/api/element", {
+    const response = await fetch("http://localhost:4321/api/element", {
         method: "DELETE",
         headers: {
             'Content-type': 'application/json',
         },
         body: JSON.stringify({ "_id": elementToDelete["_id"] })
     })
+    return { isOk: response.ok }
 }

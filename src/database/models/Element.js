@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const joi = require("joi")
 
 const elementSchema = new mongoose.Schema({
     title: String,
@@ -6,7 +7,24 @@ const elementSchema = new mongoose.Schema({
     isExpense: Boolean,
     amount: Number,
     date: Date,
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 })
 const Element = mongoose.model("element", elementSchema)
 
-module.exports = Element
+const validate = (data) => {
+    const schema = joi.object({
+        _id: joi.string().label("_id"),
+        title: joi.string().required().label("Title"),
+        category: joi.string().required().label("Category"),
+        isExpense: joi.boolean().required().label("Is expense"),
+        amount: joi.number().required().label("Amount"),
+        date: joi.date().required().label("Date"),
+        __v: joi.number().label("__v")
+    })
+    return schema.validate(data)
+}
+
+module.exports = { Element, validate }
