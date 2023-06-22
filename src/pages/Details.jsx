@@ -9,6 +9,7 @@ import Switch from "../components/Switch";
 import Error from '../components/Error';
 
 function addElementOrError(element, setErrorMessage, navigate) {
+  console.log(element)
   addElement(element).then(response => {
     if (response.isOk) {
       navigate("/")
@@ -20,7 +21,6 @@ function addElementOrError(element, setErrorMessage, navigate) {
 
 function updateElementOrError(element, setErrorMessage, navigate) {
   updateElement(element).then(response => {
-    console.log(response)
     if (response.isOk) {
       navigate("/")
     } else {
@@ -31,19 +31,25 @@ function updateElementOrError(element, setErrorMessage, navigate) {
 
 function deleteElementOrError(element, navigate) {
   deleteElement(element).then(response => {
-    console.log(response)
     if (response.isOk) {
       navigate("/")
     }
   })
 }
 
-const Details = () => {
+const Details = ({ user }) => {
   const params = useParams()
   const navigate = useNavigate()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const [element, setElement] = useState({ title: "", category: "", amount: 0.00, isExpense: true, date: today })
+  const [element, setElement] = useState({
+    title: "",
+    category: "",
+    amount: 0.00,
+    isExpense: true,
+    date: today,
+    userId: user._id
+  })
   const [errorMessage, setErrorMessage] = useState(null)
 
   const isNewElement = element["_id"] == undefined
@@ -58,7 +64,7 @@ const Details = () => {
 
   useEffect(() => {
     if (params["id"] !== undefined) {
-      fetchElement(params["id"])
+      fetchElement(user._id, params["id"])
         .then(element => setElement({
           ...element,
           "date": new Date(element["date"])

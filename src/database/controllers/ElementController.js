@@ -5,6 +5,7 @@ class ElementController {
 	constructor() {  }
 
     async insert(req, res) {
+        console.log(req.body)
         const { error } = validate(req.body)
         if (error) {
             return res
@@ -18,6 +19,7 @@ class ElementController {
         element.isExpense = req.body.isExpense
         element.amount = req.body.amount
         element.date = req.body.date
+        element.userId = req.body.userId
         await element.save()
             .then(() => res.status(200).send({ message: "Element add successfully" }))
             .catch(() => res.status(500).send({ message: "Internal server error!" }))

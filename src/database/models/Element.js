@@ -7,12 +7,12 @@ const elementSchema = new mongoose.Schema({
     isExpense: Boolean,
     amount: Number,
     date: Date,
-    owner: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
     }
 })
-const Element = mongoose.model("element", elementSchema)
+const Element = mongoose.model("elements", elementSchema)
 
 const validate = (data) => {
     const schema = joi.object({
@@ -22,6 +22,7 @@ const validate = (data) => {
         isExpense: joi.boolean().required().label("Is expense"),
         amount: joi.number().required().label("Amount"),
         date: joi.date().required().label("Date"),
+        userId: joi.string().required().label("User ID"),
         __v: joi.number().label("__v")
     })
     return schema.validate(data)

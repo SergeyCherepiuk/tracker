@@ -1,3 +1,4 @@
+const auth_config = require("../../config/auth")
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 const joi = require("joi")
@@ -9,10 +10,10 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
 })
-userSchema.methods.generateAuthToken = () => {
+userSchema.methods.generateAuthToken = function() {
     const token = jwt.sign(
         { _id: this._id },
-        "secret-key", // TODO: move out of here to the config file
+        auth_config.secret_key,
         { expiresIn: "7d" }
     )
     return token

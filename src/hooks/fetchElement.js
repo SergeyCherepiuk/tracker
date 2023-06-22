@@ -1,15 +1,15 @@
-export async function fetchElement(id) {
-    const response = await fetch(`http://localhost:4321/api/element/${id}`)
+export async function fetchElement(userId, id) {
+    const response = await fetch(`http://localhost:4321/api/${userId}/element/${id}`)
     return await response.json()
 }
 
-export async function fetchElementsBy(timespan) {
-    const response = await fetch(`http://localhost:4321/api/elements/${timespan}`)
+export async function fetchElementsBy(userId, timespan) {
+    const response = await fetch(`http://localhost:4321/api/${userId}/elements/${timespan}`)
     return await response.json()
 }
 
-export async function fetchElementsFromPreviousMonth() {
-    const response = await fetch(`http://localhost:4321/api/elements/previous-month`)
+export async function fetchElementsFromPreviousMonth(userId) {
+    const response = await fetch(`http://localhost:4321/api/${userId}/elements/previous-month`)
     return await response.json()
 }
 

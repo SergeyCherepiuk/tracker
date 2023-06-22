@@ -9,6 +9,7 @@ function signUpOrError(signUpData, setErrorMessage, navigate) {
   signUp(signUpData).then(response => {
     if (response.isOk) {
       localStorage.setItem("token", response.data.token)
+      window.location.reload()
       navigate("/")
     } else {
       setErrorMessage(response.data.message)

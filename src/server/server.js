@@ -14,7 +14,8 @@ const api = require("./routes/api")
 app.use("/api", api)
 const auth = require("./routes/auth")
 app.use("/auth", auth)
-
+const user = require("./routes/user")
+app.use("/user", user)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}!`)

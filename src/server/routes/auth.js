@@ -1,11 +1,11 @@
 const express = require("express")
 const { User, validateSignUp, validateLogIn } = require("../../database/models/User")
 const bcrypt = require("bcrypt")
+const auth_config = require("../../config/auth")
 
 const router = express.Router()
 
 router.post("/signup", async (req, res) => {
-    console.log(req.body)
     try {
         const { error } = validateSignUp(req.body)
         if (error) {
@@ -19,7 +19,7 @@ router.post("/signup", async (req, res) => {
                 .send({ message: "Email is already taken!" })
         }
 
-        const salt = await bcrypt.genSalt(Number(10)) // TODO: move salt out of here to the config file
+        const salt = await bcrypt.genSalt(Number(auth_config.salt))
         const hashPassword = await bcrypt.hash(req.body.password, salt)
         const savedUser = await new User({ ...req.body, password: hashPassword }).save()
         const token = savedUser.generateAuthToken() 

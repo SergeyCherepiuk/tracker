@@ -35,7 +35,7 @@ function getPercent(totalOfElementsThisMonth, totalOfElementsMonthAgo) {
   return ((totalOfElementsThisMonth - totalOfElementsMonthAgo) / totalOfElementsMonthAgo * 100).toFixed(2)
 }
 
-const SideBar = ({ className }) => {
+const SideBar = ({ user, className }) => {
   const navigate = useNavigate()
   const [panelsData, setPanelsData] = useState({
     totalExpensesThisMonth: 0.0,
@@ -48,8 +48,8 @@ const SideBar = ({ className }) => {
 
   useEffect(() => {
     Promise.all([
-      fetchElementsBy("month"),
-      fetchElementsFromPreviousMonth()
+      fetchElementsBy(user._id, "month"),
+      fetchElementsFromPreviousMonth(user._id)
     ]).then(elements => {
       const data = transformElements(elements[0], elements[1])
       setPanelsData(data)
@@ -57,7 +57,7 @@ const SideBar = ({ className }) => {
   }, [])
 
   return (
-    <div className={`${className} h-screen grid grid-rows-5 gap-4 items-center justify-center`}>
+    <div className={`${className} h-screen grid grid-rows-5 items-center justify-center`}>
       <Panel
         isExpense={true}
         amount={panelsData.totalExpensesThisMonth}
@@ -66,7 +66,9 @@ const SideBar = ({ className }) => {
         isExpense={false}
         amount={panelsData.totalIncomesThisMonth}
         percent={panelsData.incomesPercent} />
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-2 row-span-2'>
+        <p className='text-xl'>Logged in as {user.firstName}</p>
+        <p className='text-lg'>{user.email}</p>
         <Button
           label="Add"
           action={() => navigate("/details")}

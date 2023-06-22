@@ -1,5 +1,9 @@
+export async function fetchUserById(id) {
+    const response = await fetch(`http://localhost:4321/user/${id}`)
+    return { data: await response.json(), isOk: response.ok }
+}
+
 export async function signUp(signUpData) {
-    console.log(signUpData)
     const response = await fetch("http://localhost:4321/auth/signup", {
         method: "POST",
         headers: {
