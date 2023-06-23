@@ -24,3 +24,14 @@ export async function logIn(logInData) {
     })
     return { data: await response.json(), isOk: response.ok }
 }
+
+export async function deleteUser(userId) {
+     const response = await fetch("http://localhost:4321/auth/delete", {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({ id: userId })
+     })
+     return { data: await response.json(), isOk: response.ok }
+}

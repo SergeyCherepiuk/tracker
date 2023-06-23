@@ -128,7 +128,6 @@ router.get("/:userId/elements/all", (req, res) => {
     Element
         .find({ userId: userId })
         .sort({ date: -1 })
-        .exec()
         .then(elements => res.json(elements))
         .catch(err => {
             console.log(err)

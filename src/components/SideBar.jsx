@@ -3,10 +3,15 @@ import Panel from './Panel'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
 import { fetchElementsBy, fetchElementsFromPreviousMonth } from "../hooks/fetchElement"
-import { fetchUserById } from '../hooks/fetchUser'
+import { deleteUser, fetchUserById } from '../hooks/fetchUser'
 
 function sum(array) {
   return array.reduce((acc, x) => acc + x, 0);
+}
+
+function logOut() {
+  localStorage.removeItem("token")
+  window.location.reload()
 }
 
 function transformElements(elementsThisMonth, elementsMonthAgo) {
@@ -85,11 +90,15 @@ const SideBar = ({ userId, className }) => {
           color="bg-green-500" />
         <Button
           label="Log out"
-          action={() => {
-            localStorage.removeItem("token")
-            window.location.reload()
-          }}
+          action={() => logOut()}
           color="bg-gray-500" />
+          <Button
+          label="Delete account"
+          action={() => {
+            logOut()
+            deleteUser(userId)
+          }}
+          color="bg-red-500" />
       </div>
     </div>
   )
