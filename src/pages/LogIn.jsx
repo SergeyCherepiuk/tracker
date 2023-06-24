@@ -46,7 +46,7 @@ const LogIn = () => {
         value={logInData.password}
         onValueChange={setPassword} />
       <Button
-        label="Sign up"
+        label="Log in"
         color="bg-green-500"
         action={() => logInOrError(logInData, setErrorMessage, navigate)} />
       <div className='flex flex-row gap-4 justify-center'>
